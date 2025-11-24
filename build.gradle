@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'jemin'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Servlet API
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+
+    // OWASP Encoder for XSS prevention examples
+    implementation("org.owasp.encoder:encoder:1.2.3")
+
+    // JSoup for HTML parsing
+    implementation("org.jsoup:jsoup:1.18.1")
+
+    // Apache Commons Text
+    implementation("org.apache.commons:commons-text:1.12.0")
+
+    // Testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// WAR 파일 생성 설정
+war {
+    archiveBaseName = 'OutConSenBench'
+    archiveVersion = '1.0'
+}
